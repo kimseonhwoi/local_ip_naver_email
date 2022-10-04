@@ -1,0 +1,14 @@
+server:
+  port: 8080
+
+spring:
+  mail:
+    host: smtp.naver.com
+    port: 465
+    username: naverId@naver.com
+    password: naverPassword
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.ssl.enable: true
+      mail.smtp.ssl.trust: smtp.naver.com
+    to: user1Email,user2Email,user3Email
