@@ -8,6 +8,8 @@ import org.springframework.stereotype.Component;
 
 import javax.mail.internet.MimeMessage;
 import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.util.Enumeration;
 
 @Component
 public class NaverMailSenderRunner {
@@ -27,7 +29,23 @@ public class NaverMailSenderRunner {
         h.setFrom(username);
         h.setTo(toList);
         h.setSubject("[SERVER IP]");
-        h.setText("serverIp: " + InetAddress.getLocalHost().getHostAddress());
+        h.setText("SERVER IP LIST" + getAddress());
         mailSender.send(m);
+    }
+
+    private String getAddress() throws Exception{
+        String address = "";
+        Enumeration e = NetworkInterface.getNetworkInterfaces();
+        while(e.hasMoreElements())
+        {
+            NetworkInterface n = (NetworkInterface) e.nextElement();
+            Enumeration ee = n.getInetAddresses();
+            while (ee.hasMoreElements())
+            {
+                InetAddress i = (InetAddress) ee.nextElement();
+                address += "\n["+i.getHostAddress()+"]\n";
+            }
+        }
+        return address;
     }
 }
